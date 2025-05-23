@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif; 
+        }
+
+        .background {
+            display: flex;
+            justify-content: center;            
+            align-items: center; 
+            height: 100vh;
+            background-color: #ffffff;
+            background-size: cover;
+            background-position: center;
+            padding: 0;
+            position: relative;
+        }
+
+        .container {
+            background-color: transparent;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 15);
+            background-size: cover;
+            background-position: center;
+            width: 550px;
+            margin: 10px auto;
+            font-family: Arial, sans-serif; 
+            font-size: smaller;
+            font-weight: bolder;
+            padding: 20px;
+            margin-left: 20px;
+            position: absolute;
+            top: 20px;
+            color: rgb(0, 0, 0);
+            border: 2px solid rgb(21, 105, 200);
+            border-radius: 5px;
+            padding-bottom: 10px;
+            padding-top: 1px;
+        }
+
+        .container2 {
+            width: 370px;
+            height: 230px;  
+            perspective: 800px;
+            font-family: Arial, sans-serif; 
+        } 
+
+        .container2:hover > .card{
+           cursor: pointer;
+           transform: rotateY(180deg);
+        }
+
+        .card {
+            height: 100%;
+            width: 100%;
+            bottom: -170px;
+            position: absolute;
+            transition: transform 1500ms;
+            transform-style: preserve-3d;
+        }
+
+        .front,
+        .back {
+            width: 100%;
+            height: 100%;
+            border-radius: 1rem;  
+            box-shadow: 0 0 40px rgba(0, 0, 0, 15);
+            position: absolute;
+            backface-visibility: hidden;
+        }
+
+        .front {
+            background-image: url(StudentE.png);
+            background-size: contain;
+        }
+
+        .back {
+            background-color: rgb(255, 255, 255);
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5rem;
+        }
+
+        .options {
+            color: rgb(21, 105, 200);
+            text-align: center;
+            margin-top: 10px;
+            font-family: Arial, sans-serif;
+            position: absolute;
+            top: 30px;
+            left: 40%;
+        }
+
+        button[type="submit"] {
+            width: 600px;
+            position: absolute;
+            top: -15px;
+            left: 0%;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            padding-top: 10px;
+            font-family: Arial, sans-serif;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-family: Arial, sans-serif;
+        }
+
+        select,
+        input[type="text"] {
+            color: black;
+            background-color: gainsboro;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid gainsboro;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+        }
+
+        button {
+            padding: 10px 40px;
+            margin-top: 700px;
+            width: 630px;
+            background-color: rgb(0, 75, 140);
+            color: white;
+            text-decoration: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: rgb(0, 75, 140);
+            color: rgb(255, 255, 255);
+            border: 1px Solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background">
+        <div class="container">
+            <!-- Code for capturing details using textfield -->
+            <form id="checkOutForm">
+                <label for="sex">INITIALS</label>
+                <input type="text" id="sex" name="sex" placeholder="Mr TG or Ms TG..." required>
+            
+                <label for="surname">SURNAME</label>
+                <input type="text" id="surname" name="surname" placeholder="Your surname..." required>
+            
+                <label for="department">DEPARTMENT</label>
+                <input type="text" id="department" name="department" placeholder="Your department..." required>
+            
+                <label for="number">STUDENT NUMBER</label>
+                <input type="text" id="number" name="number" placeholder="Your student number..." required>
+            
+                <!-- Button -->
+                <button type="submit">DONE</button>
+            </form>
+        </div>
+        <!-- Container2 Automated card -->
+        <div class="container2">
+            <div class="card">
+               <div class="front"></div>
+               <div class="back"></div>
+            </div>
+        </div>  
+    </div>
+    <!-- JavaScript code below -->
+    <script>
+        document.getElementById("checkOutForm").addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent form from submitting the default way
+
+      // Getting values from the textfield
+        const sex = document.getElementById("sex").value.trim();
+        const surname = document.getElementById("surname").value.trim();
+        const department = document.getElementById("department").value.trim();
+        const number = document.getElementById("number").value.trim();
+
+        // Validate inputs
+        if (!sex || !surname || !department || !number) {
+            alert("Please fill in the missing textfields.");
+        } else {
+        // Save form data to localStorage
+        localStorage.setItem("sex", sex);
+        localStorage.setItem("surname", surname);
+        localStorage.setItem("department", department);
+        localStorage.setItem("number", number);
+        //Referencing to the next web page
+        alert("Your student card details have been captured successfully and correctly.");
+           window.location = "Std2.html";
+        }
+    });
+    </script>
+</body>
+
+</html>
