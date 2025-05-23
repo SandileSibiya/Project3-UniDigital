@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Application Cancellation Confirmation</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      height: 100vh;
+    }
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: #007bff;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      z-index: 10;
+    }
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin: 0 1rem;
+      font-weight: 500;
+    }
+    .main-layout {
+      display: flex;
+      height: 100vh;
+      padding-top: 60px;
+    }
+    .profile-sidebar {
+      width: 300px;
+      background: white;
+      padding: 2rem;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .profile-circle {
+      width: 120px;
+      height: 120px;
+      background-color: #007bff;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .content-area {
+      flex: 1;
+      background-color: #f8f9fa;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+    .confirmation-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      padding: 3rem;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .btn-rounded {
+      border-radius: 30px;
+      font-weight: 600;
+      padding: 0.5rem 1.5rem;
+    }
+    .warning-icon {
+      font-size: 4rem;
+      color: #dc3545;
+      margin-bottom: 1.5rem;
+    }
+    .confirmation-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .cancellation-details {
+      background-color: #fff8f8;
+      border-left: 4px solid #dc3545;
+      padding: 1rem;
+      margin: 2rem 0;
+      text-align: left;
+    }
+
+    /* Mobile Navbar */
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #007bff;
+      padding: 0.5rem 0;
+      z-index: 10;
+    }
+    .nav-mobile-links {
+      display: flex;
+      justify-content: space-around;
+    }
+    .nav-mobile a {
+      color: white;
+      text-decoration: none;
+      text-align: center;
+      font-size: 0.8rem;
+      padding: 0.5rem;
+    }
+    .nav-mobile i {
+      display: block;
+      font-size: 1.2rem;
+      margin-bottom: 0.2rem;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .main-layout {
+        flex-direction: column;
+        padding-top: 60px;
+        padding-bottom: 60px; /* Add padding for mobile nav */
+      }
+      .profile-sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 1rem;
+        box-shadow: none;
+        border-bottom: 1px solid #ccc;
+      }
+      .profile-circle {
+        width: 60px;
+        height: 60px;
+        font-size: 1rem;
+        margin-bottom: 0;
+      }
+      .content-area {
+        padding: 1rem;
+      }
+      .confirmation-card {
+        padding: 1.5rem;
+      }
+      .confirmation-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+      }
+      .navbar .desktop-links {
+        display: none; /* Hide desktop nav links on mobile */
+      }
+      
+      /* Show mobile navbar only on mobile */
+      .nav-mobile {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Single navbar that transforms between desktop and mobile -->
+  <div class="navbar">
+    <div class="fw-bold">UniDigital</div>
+    <div class="desktop-links">
+      <a href="#"><i class="bi bi-house-door-fill"></i> Home</a>
+      <a href="#"><i class="bi bi-credit-card-2-front-fill"></i> Cards</a>
+      <a href="#"><i class="bi bi-bell-fill"></i> Notify</a>
+      <a href="#"><i class="bi bi-person-circle"></i> Profile</a>
+      <a href="#"><i class="bi bi-box-arrow-right"></i> Sign Out</a>
+    </div>
+  </div>
+
+  <div class="main-layout">
+    <div class="profile-sidebar">
+      <div class="profile-circle">JS</div>
+      <div>
+        <h6 class="mb-0">MR JH SMITH</h6>
+        <small class="text-muted d-block">STUDENT</small>
+        <small class="text-muted">ID: 012345679</small>
+      </div>
+    </div>
+    
+    <div class="content-area">
+      <div class="confirmation-card">
+        <div class="warning-icon">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+        </div>
+        <h3 class="mb-3">Application Cancellation Confirmed</h3>
+        <p class="text-muted mb-4">
+          Your student application has been successfully cancelled. All submitted materials will be permanently deleted from our system.
+        </p>
+        
+        <div class="cancellation-details">
+          <h5><i class="bi bi-info-circle-fill text-danger me-2"></i>Cancellation Details</h5>
+          <div class="d-flex justify-content-between mt-2">
+            <span class="text-muted">Application ID:</span>
+            <strong>APP-2025-78945</strong>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span class="text-muted">Cancelled On:</span>
+            <strong>May 23, 2025 at 14:30</strong>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span class="text-muted">Cancelled By:</span>
+            <strong>MR JH SMITH</strong>
+          </div>
+        </div>
+        
+        <div class="alert alert-warning mt-4 text-start">
+          <i class="bi bi-exclamation-octagon-fill me-2"></i>
+          <strong>Important:</strong> This action cannot be undone. If you wish to reapply, you'll need to submit a new application.
+        </div>
+        
+        <div class="confirmation-actions">
+          
+          <button class="btn btn-outline-primary btn-rounded">
+            <i class="bi bi-house-door-fill me-2"></i> RETURN TO PROFILE
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Navbar (only visible on mobile) -->
+  <div class="nav-mobile">
+    <div class="nav-mobile-links">
+      <a href="#"><i class="bi bi-house-door-fill"></i> Home</a>
+      <a href="#"><i class="bi bi-credit-card-2-front-fill"></i> Cards</a>
+      <a href="#"><i class="bi bi-bell-fill"></i> Notify</a>
+      <a href="#"><i class="bi bi-person-circle"></i> Profile</a>
+    </div>
+  </div>
+</body>
+</html>
