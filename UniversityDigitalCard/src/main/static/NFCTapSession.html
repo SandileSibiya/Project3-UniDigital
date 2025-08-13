@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NFC Tap Session</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+    }
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 10px;
+
+    }
+    .header {
+      text-align: center;
+      font-weight: bold;
+      padding: 20px 0;
+    }
+    .back-icon {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .card-box {
+      border: 2px solid black;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      position: relative;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    }
+    .student-card {
+      border: 2px solid blue;
+      border-radius: 15px;
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 20px;
+      box-shadow: -2px 3px 2px rgba(0, 0, 0, 0.5);
+    }
+    .student-info {
+      position: absolute;
+      top : 15px;
+      left: 45px;
+      border-radius: 15px;
+      width: 100%;
+      height: 190px;
+      max-width: 300px;
+      margin-bottom: 20px;
+      box-shadow: -2px 3px 2px rgba(0, 0, 0, 0.5);
+    }
+    .student-info .tittle {
+      color: black;
+      position: absolute;
+      top: 66.5px;
+      left: 148px;
+      font-weight: bolder;
+      font-size: 11px;
+    }
+    .student-info .initial {
+      color: black;
+      position: absolute;
+      top: 66.5px;
+      left: 170px;
+      font-weight: bold;
+      font-size: 11px;
+    }
+    .student-info .surname {
+      color: black;
+      position: absolute;
+      top: 66.5px;
+      left: 190px;
+      font-weight: bold;
+      font-size: 11px;
+    }
+    .student-info .department {
+      color: black;
+      position: absolute;
+      text-align: left;
+      top: 86.3px;
+      left: 140px;
+      font-weight: bold;
+      font-size: 11px;
+    }
+    .student-info .student-number {
+      color: black;
+      position: absolute;
+      top: 115px;
+      left: 160px;
+      font-weight: bold;
+      font-size: 12px;
+    }
+    .student-info .student-photo {
+      position: absolute;
+      top: 68px;
+      left: 23px;
+      width: 75px;
+      height: 75px;
+    }
+    .student-info .student-qr {
+      position: absolute;
+      bottom: 12px;
+      right: 8px;
+      width: 55px;
+      height: 55px;
+    }
+
+    .nfc-icon {
+      width: 90px;
+      height: 70px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 5px auto;
+    }
+    .instructions {
+      font-size: 14px;
+      margin: 10px 0;
+    }
+    .instructions .blue {
+      color: #2674a8;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 20px;
+      border-radius: 10px;
+      border: 2px solid black;
+      background-color: #eee;
+      border-radius: 10px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background-color: black;
+      width: 100%;
+      transition: width 1s linear;
+    }
+    .timer {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      background-color: #2674a8;
+      color: black;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bolder;
+      cursor: pointer;
+      margin-bottom: 20px;
+      box-shadow: -2px 3px 2px rgba(0, 0, 0, 0.5);
+    }
+    .btn:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    .help {
+      font-size: 15px;
+      text-align: center;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="back-icon">←</div>
+  <div class="header">NFC TAP SESSION</div>
+  <div class="card-box">
+    <img src="https://raw.githubusercontent.com/SandileSibiya/Project3-UniDigital/230975623---(Sandile)/RemoteCard.png" class="student-card" alt="Student Card" />
+    <div class="student-info" id="studentInfo">
+      <!-- Student details will be inserted here by JavaScript -->
+    </div>
+    <img src="https://raw.githubusercontent.com/SandileSibiya/Project3-UniDigital/230975623---(Sandile)/NFCReaderLogo.png" class="nfc-icon" alt="NFC Icon" />
+    <div class="instructions">
+      HOLD your phone to near NFC Reader<br />
+      <span class="blue">Reminder this card can only be read by CPUT NFC system</span>
+    </div>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-bar-fill" id="progressBar"></div>
+  </div>
+  <div class="timer" id="timer">Your Tap Session Expire In<br />1 Minutes 30 Seconds</div>
+  <button class="btn" id="reloadBtn" disabled>RELOADS</button>
+  <div class="help">
+    Need Help? Contact Admin@Example.Com<br />
+    (021) 324-56789
+  </div>
+</div>
+
+<script>
+  //Back button functionality
+  document.querySelector('.back-icon').addEventListener('click', function() {
+    window.history.back();
+  });
+
+  // Retrieve user data from session storage
+  const userData = JSON.parse(sessionStorage.getItem('currentUser'));
+
+  // Display user information on the card
+  if (userData) {
+    const studentInfo = document.getElementById('studentInfo');
+    studentInfo.innerHTML = `
+      <div class="tittle">${userData.tittle.toUpperCase()}</div>
+      <div class="initial">${userData.initials.toUpperCase()}</div>
+      <div class="surname">${userData.surname.toUpperCase()}</div>
+      <div class="department">${userData.course.toUpperCase()}</div>
+      <div class="student-number">${userData.studentId}</div>
+      <div class="student-photo">
+        <img src="${userData.photo}" alt="Student Photo" style="width:75px;height:75px;">
+      </div>
+      <div class="student-qr">
+        <img src="data:image/png;base64,${userData.qrCode}" alt="QR Code" width="60" height="60" />
+      </div>
+    `;
+  } else {
+    // If no user data found, redirect back to login
+    window.location.href = 'login.html';
+  }
+
+  // /////////////
+  //
+  // // Always fetch the latest student photo
+  // fetch(`http://localhost:8080/api/cputdigitalcard.com/NFCTappingSession?studentId=${encodeURIComponent(userData.studentId)}`, {
+  //   cache: "no-store"
+  // })
+  //         .then(response => {
+  //           if (!response.ok) {
+  //             throw new Error("Failed to fetch student photo");
+  //           }
+  //           return response.json();
+  //         })
+  //         .then(data => {
+  //           if (data.photo) {
+  //             const photoSrc = `data:image/png;base64,${data.photo}`;
+  //             document.querySelector('.student-photo').innerHTML = `
+  //         <img src="${photoSrc}" alt="Student Photo" style="width:75px;height:75px;">
+  //       `;
+  //           }
+  //         })
+  //         .catch(error => {
+  //           console.error("Error fetching latest student photo:", error);
+  //         });
+  //
+  // ///////////
+  const totalTime = 15; // Setting the time to 15 seconds
+  let timeLeft = totalTime;
+  const progressBar = document.getElementById('progressBar');
+  const timerElement = document.getElementById('timer');
+  const reloadBtn = document.getElementById('reloadBtn');
+
+  // Start the countdown
+  startCountdown();
+
+  function startCountdown() {
+    timeLeft = totalTime;
+    reloadBtn.disabled = true;
+    reloadBtn.textContent = "RELOADS";
+
+    // Reset progress bar
+    progressBar.style.width = '100%';
+    progressBar.style.transition = 'none';
+    // Force reflow to apply immediate changes
+    progressBar.offsetHeight;
+    progressBar.style.transition = `width ${totalTime}s linear`;
+    progressBar.style.width = '0%';
+
+    updateTimerDisplay();
+
+    const countdownInterval = setInterval(() => {
+      timeLeft--;
+      updateTimerDisplay();
+
+      //If statement for the progress bar when the time is up
+      if (timeLeft <= 0) {
+        clearInterval(countdownInterval);
+        sessionEnded();
+      }
+    }, 1000);
+  }
+
+  // fuction that convert the time into seconds to minutes and seconds
+  function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    timerElement.innerHTML = `Your Tap Session Expire In<br />${minutes} Minutes ${seconds} Seconds`;
+  }
+
+  // Function to ables the reload button and update the timer display when the session expires
+  function sessionEnded() {
+    reloadBtn.disabled = false;
+    timerElement.innerHTML = "Your Tap Session Has Expired, Please Reload for further use";
+  }
+  //Reload button that triggers the countdown again
+  reloadBtn.addEventListener('click', startCountdown);
+
+</script>
+</body>
+</html>
