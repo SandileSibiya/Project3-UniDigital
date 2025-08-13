@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Card</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: white;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: auto;
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      font-weight: bold;
+      padding: 20px 0;
+    }
+    .top-nav {
+      display: flex;
+      justify-content: center;
+      gap: 100px;
+      margin-bottom: 30px;
+    }
+
+    .sub-title,
+    .sub-title2 {
+      cursor: pointer;
+      font-weight: bold;
+      color: black;
+    }
+
+    .back-icon {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .card-preview {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .card-img {
+      border : 2px solid blue;
+      border-radius: 15px;
+      width: 100%;
+      max-width: 300px;
+      /*box-shadow: -2px 3px 2px rgba(0, 0, 0, 0.5);*/
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+      z-index: 1;
+    }
+    .card-img2 {
+      border : 2px solid blue;
+      border-radius: 15px;
+      width: 100%;
+      max-width: 300px;
+      margin-top: -190px;
+      margin-left: 50px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+      z-index: -1;
+    }
+
+    .toggle-section, .tap-session {
+      border: 2px solid black;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 10px 0;
+      background-color: #fff;
+      box-shadow: -2px 3px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .toggle-section p, .tap-session p {
+      margin: 5px 0 0;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .toggle-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 22px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 22px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #4CAF50;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(18px);
+    }
+
+    .tap-session {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .arrow {
+      cursor: pointer;
+      font-size: 30px;
+      font-weight: bolder;
+      color: black;
+    }
+    .card-preview {
+      position: relative;
+      width: 300px;
+      height: 190px;
+      margin: auto;
+      perspective: 1000px;
+    }
+
+    .card-preview .card-img {
+      position: absolute;
+      left: 50%;
+      width: 100%;
+      max-width: 300px;
+      transform: translateX(-50%) rotateY(0deg);
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      transition: transform 0.6s ease;
+    }
+
+    /* start with the back face rotated away */
+    .card-preview .back-img {
+      transform: translateX(-50%) rotateY(-180deg);
+    }
+
+    /* when we flip: bring back face forward, send front face away */
+    .card-preview.show-back .front-img {
+      transform: translateX(-50%) rotateY(180deg);
+    }
+    .card-preview.show-back .back-img {
+      transform: translateX(-50%) rotateY(0deg);
+    }
+
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="back-icon">←</div>
+  <div class="header">CARD</div>
+
+  <div class="top-nav">
+    <div class="sub-title">Front View</div>
+    <div class="sub-title2">Back View</div>
+  </div>
+
+  <div class="card-preview">
+    <img
+            src="https://raw.githubusercontent.com/SandileSibiya/Project3-UniDigital/main/UniversityDigitalCard/src/main/static/RemoteCard.png"
+            alt="Student Card Front"
+            class="card-img front-img"
+    />
+    <img
+            src="https://raw.githubusercontent.com/SandileSibiya/Project3-UniDigital/main/UniversityDigitalCard/src/main/static/StudentCardBack.png"
+            alt="Student Card Back"
+            class="card-img back-img"
+    />
+  </div>
+
+
+  <div class="toggle-section">
+    <div class="toggle-label">
+      <span>Printing Access</span>
+      <label class="switch">
+        <input type="checkbox" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+    <p>Use your student card to print document in library and you can also switch it on and off.</p>
+  </div>
+
+  <div class="toggle-section">
+    <div class="toggle-label">
+      <span>NFC Tap Integration</span>
+      <label class="switch">
+        <input type="checkbox" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+    <p>Use the student card via NFC (Near Field Communication) to tap for building access.</p>
+  </div>
+
+  <div class="tap-session">
+    <div>
+      <strong>NFC Tap Session</strong>
+      <p>Use card to tap to nearby NFC reader to gain access to campus buildings.</p>
+    </div>
+    <span class="arrow">&#8594;</span>
+  </div>
+</div>
+<script>
+  // function for back arrow
+    document.querySelector('.back-icon').addEventListener('click', function() {
+        window.history.back();
+    });
+
+  // Declaring card values
+  const frontBtn = document.querySelector('.sub-title');
+  const backBtn  = document.querySelector('.sub-title2');
+  const card     = document.querySelector('.card-preview');
+
+  frontBtn.addEventListener('click', () => {
+    card.classList.remove('show-back');
+  });
+
+  backBtn.addEventListener('click', () => {
+    card.classList.add('show-back');
+  });
+
+  //function for the arrow
+    document.querySelector('.arrow').addEventListener('click', function() {
+        window.location.href = "NFCTapSession.html"
+    });
+
+</script>
+</body>
+</html>
