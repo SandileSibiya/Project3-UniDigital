@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Map</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family:'Arial', sans-serif;
+      background-color: #fff;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 450px;
+      width: 100%;
+      text-align: center;
+    }
+    .map-container {
+      height: 100%;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid black;
+      border-radius: 12px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .back-button {
+      font-size: 1.5rem;
+      padding-left: 0.5rem;
+    }
+
+    h1 {
+      font-size: 1.2rem;
+      flex-grow: 1;
+    }
+
+    .logo {
+      max-width: 150px;
+      margin: 0 auto 1rem;
+    }
+
+    .tip {
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      padding: 0 1rem;
+    }
+
+    .description {
+      color: #0077cc;
+      font-size: 0.9rem;
+      padding: 0 1rem;
+      margin-top: 15px;
+    }
+    .contact {
+      color: #555;
+      margin-top: 15px;
+    }
+
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="back-button">←</div>
+    <h1>MAP</h1>
+    <div style="width: 1.5rem;"></div>
+  </div>
+   <!-- Cput logo reference on web --->
+  <img src="https://vectorseek.com/wp-content/uploads/2023/08/Cput-Logo-Vector.svg-.png" alt="CPUT Logo" class="logo" />
+
+  <p class="tip">
+    Tip: Use the Map to see locations where you can use your card to access the building.
+  </p>
+
+  <div class="map-container">
+    <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.215139095196!2d18.41657291521038!3d-33.93676418063774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc677ca21a09f9%3A0x7e3540a246559d4a!2sHanover%20St%2C%20Cape%20Town%2C%20Western%20Cape%2C%20South%20Africa!5e0!3m2!1sen!2sza!4v1720279000000!5m2!1sen!2sza"
+            width="100%"
+            height="100%"
+            style="border:0; border-radius: 12px;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+
+  <p class="description">
+    Let student access the map of the campus within building information and direction to where the NFC System are located within the premises of campus
+  </p>
+
+  <p class="contact">
+    Need Help? Contact Admin@Example.Com<br />
+    (021) 324-56789
+  </p>
+</div>
+<script>
+  // Back button functionality
+  document.querySelector('.back-button').addEventListener('click', function() {
+    window.history.back();
+  });
+</script>
+</body>
+</html>
