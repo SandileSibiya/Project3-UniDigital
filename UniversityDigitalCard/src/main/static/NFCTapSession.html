@@ -188,7 +188,7 @@
       HOLD your phone to near NFC Reader<br />
       <span class="blue">Reminder this card can only be read by CPUT NFC system</span>
     </div>
-  </div>https://github.com/SandileSibiya/Project3-UniDigital/blob/main/UniversityDigitalCard/src/main/static/NFCReaderLogo.png
+  </div>
   <div class="progress-bar">
     <div class="progress-bar-fill" id="progressBar"></div>
   </div>
@@ -213,49 +213,26 @@
   if (userData) {
     const studentInfo = document.getElementById('studentInfo');
     studentInfo.innerHTML = `
-      <div class="tittle">${userData.tittle.toUpperCase()}</div>
-      <div class="initial">${userData.initials.toUpperCase()}</div>
-      <div class="surname">${userData.surname.toUpperCase()}</div>
-      <div class="department">${userData.course.toUpperCase()}</div>
-      <div class="student-number">${userData.studentId}</div>
-      <div class="student-photo">
-        <img src="${userData.photo}" alt="Student Photo" style="width:75px;height:75px;">
-      </div>
-      <div class="student-qr">
-        <img src="data:image/png;base64,${userData.qrCode}" alt="QR Code" width="60" height="60" />
-      </div>
+        <div class="tittle">${userData.tittle.toUpperCase()}</div>
+        <div class="initial">${userData.initials.toUpperCase()}</div>
+        <div class="surname">${userData.surname.toUpperCase()}</div>
+        <div class="department">${userData.course.toUpperCase()}</div>
+        <div class="student-number">${userData.studentId}</div>
+        <div class="student-photo">
+            <img src="${userData.photo}" alt="Student Photo" style="width:75px;height:75px;">
+        </div>
+        <div class="student-qr">
+            <img src="data:image/png;base64,${userData.qrCode}" alt="QR Code" width="60" height="60" />
+        </div>
     `;
+
   } else {
     // If no user data found, redirect back to login
     window.location.href = 'login.html';
   }
 
-  // /////////////
-  //
-  // // Always fetch the latest student photo
-  // fetch(`http://localhost:8080/api/cputdigitalcard.com/NFCTappingSession?studentId=${encodeURIComponent(userData.studentId)}`, {
-  //   cache: "no-store"
-  // })
-  //         .then(response => {
-  //           if (!response.ok) {
-  //             throw new Error("Failed to fetch student photo");
-  //           }
-  //           return response.json();
-  //         })
-  //         .then(data => {
-  //           if (data.photo) {
-  //             const photoSrc = `data:image/png;base64,${data.photo}`;
-  //             document.querySelector('.student-photo').innerHTML = `
-  //         <img src="${photoSrc}" alt="Student Photo" style="width:75px;height:75px;">
-  //       `;
-  //           }
-  //         })
-  //         .catch(error => {
-  //           console.error("Error fetching latest student photo:", error);
-  //         });
-  //
-  // ///////////
-  const totalTime = 15; // Setting the time to 15 seconds
+
+  const totalTime = 30; // Setting the time to 15 seconds
   let timeLeft = totalTime;
   const progressBar = document.getElementById('progressBar');
   const timerElement = document.getElementById('timer');
@@ -291,7 +268,7 @@
     }, 1000);
   }
 
-  // fuction that convert the time into seconds to minutes and seconds
+  // function that convert the time into seconds to minutes and seconds
   function updateTimerDisplay() {
     const minutes = Math.floor(timeLeft / 60);
     const seconds = timeLeft % 60;
