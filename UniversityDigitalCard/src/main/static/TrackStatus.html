@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Track Status</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+
+
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+        }
+
+
+        .header {
+            text-align: center;
+            font-weight: bold;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .profile {
+            text-align: center;
+        }
+
+        .avatar {
+            background-color: #4285f4;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .name {
+            font-weight: bold;
+        }
+
+        .student-id {
+            color: gray;
+        }
+
+        .status-tracker {
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .step-circle {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: lightgray;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+
+        .step-circle.checked {
+            border: 2px solid blue;
+            background-color: #000;
+            color: white;
+        }
+
+        .step-circle.current {
+            background-color: #4285f4;
+        }
+
+        .step-line {
+            height: 30px;
+            width: 2px;
+            background-color: gray;
+            position: absolute;
+            left: 11.5px;
+            top: 25px;
+        }
+
+        .info-box {
+            border: 2px solid black;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: -2px 3px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .info-box h4 {
+            margin-top: 0;
+            font-weight: bold;
+        }
+
+        .info-box p {
+            margin: 5px 0;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 20px;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">TRACK STATUS</div>
+
+    <div class="profile">
+        <div class="avatar">JS</div>
+        <div class="name">MR JH SMITH</div>
+        <div class="student-id">012345679</div>
+    </div>
+
+    <div class="status-tracker">
+        <div class="step">
+            <div class="step-circle checked">&#10003;</div>
+            <div>APPLICATION SUBMITED</div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step">
+            <div class="step-circle checked">&#10003;</div>
+            <div>DETAILS VERIFIED</div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step">
+            <div class="step-circle current"></div>
+            <div>CARD IN PRODUCTION</div>
+        </div>
+    </div>
+
+    <div class="info-box">
+        <h4>APPLICATION DETAILS</h4>
+        <p><strong>Application ID:</strong> 3123456</p>
+        <p><strong>Submission Date:</strong> April 28, 2025</p>
+        <p><strong>Current Status:</strong> In Production (Pending)</p>
+        <p><strong>Estimated Completion:</strong> May 02, 2025</p>
+    </div>
+
+    <div class="info-box">
+        <h4>COLLECTION INFORMATION</h4>
+        <p><strong>Delivery Option:</strong> Campus Collection</p>
+        <p><strong>Pickup Location:</strong> ELearning Building</p>
+        <p><strong>Pickup Date:</strong> TBD</p>
+    </div>
+
+    <div class="footer">
+        Need Help? Contact Admin@Example.Com<br/>
+        (021) 324-56789
+    </div>
+</div>
+</body>
+</html>
