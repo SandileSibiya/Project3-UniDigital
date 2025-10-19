@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <style>
+        body {
+            background-image: url("https://raw.githubusercontent.com/SandileSibiya/Project3-UniDigital/main/UniversityDigitalCard/src/main/static/Images/BackImg2.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .logo {
+            margin-bottom: 50px;
+            height: 60px;
+            width: 190px;
+        }
+
+        .login-container {
+            background-color: rgba(25, 104, 157, 0.15);
+            padding: 20px;
+            border: 3px solid rgba(25, 104, 157, 1);
+            backdrop-filter: blur(3px);
+            border-radius: 15px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+            width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            color: rgba(25, 104, 157, 1);
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid black;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #2674a8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0e4265;
+            color: white;
+        }
+
+        .register-link {
+            margin-top: 20px;
+            font-size: 15px;
+            color: white;
+        }
+
+        .register-link a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .forgot-password a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        /* 🔹 Popup Modal Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+
+        .popup {
+            background: rgba(25, 104, 157, 0.2);
+            border: 2px solid rgba(25, 104, 157, 1);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            color: white;
+            width: 280px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .popup h3 {
+            margin: 0 0 10px;
+            color: white;
+        }
+
+        .popup p {
+            margin: 0 0 15px;
+            font-size: 14px;
+        }
+
+        .popup button {
+            background-color: #2674a8;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .popup button:hover {
+            background-color: #0e4265;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+<img src="https://vectorseek.com/wp-content/uploads/2023/08/Cput-Logo-Vector.svg-.png" alt="CPUT Logo" class="logo" />
+
+<div class="login-container">
+    <h2>SIGN IN</h2>
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Student Email" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <button type="submit">LOGIN</button>
+        <div id="errorMessage" class="error-message"></div>
+    </form>
+    <div class="register-link">
+        Not A Registered User?<br />
+        <a href="LinkPage.html">Link Your Student Details Here</a>
+    </div>
+</div>
+
+<!-- 🔹 Popup Modal -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup" id="popupBox">
+        <h3 id="popupTitle">Message</h3>
+        <p id="popupMessage">This is a popup message.</p>
+        <button id="popupButton">OK</button>
+    </div>
+</div>
+
+<script>
+    const popupOverlay = document.getElementById("popupOverlay");
+    const popupTitle = document.getElementById("popupTitle");
+    const popupMessage = document.getElementById("popupMessage");
+    const popupButton = document.getElementById("popupButton");
+
+    // Function to show popup
+    function showPopup(title, message, callback) {
+        popupTitle.textContent = title;
+        popupMessage.textContent = message;
+        popupOverlay.style.display = "flex";
+        popupButton.onclick = function () {
+            popupOverlay.style.display = "none";
+            if (callback) callback();
+        };
+    }
+
+    document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const errorMessage = document.getElementById("errorMessage");
+
+            errorMessage.textContent = "";
+
+            const credentials = {
+                email: username.includes("@") ? username : null,
+                password: password,
+            };
+
+            if (!credentials.email || !credentials.password) {
+                showPopup("Login Error", "Invalid username or password.");
+                return;
+            }
+
+            fetch("http://localhost:8080/cputdigitalcard.com/api/cputdigitalcard.com/Login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: credentials.email,
+                    password: credentials.password,
+                }),
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        return response.json().then((err) => {
+                            throw err;
+                        });
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log("Server response:", data);
+                    if (data.error) {
+                        showPopup("Login Failed", data.error);
+                    } else if (data.studentId) {
+                        sessionStorage.setItem(
+                            "currentUser",
+                            JSON.stringify({
+                                studentId: data.studentId,
+                                initials: data.initials,
+                                firstName: data.firstName,
+                                middleName: data.middleName,
+                                surname: data.surname,
+                                course: data.course,
+                                tittle: data.tittle,
+                                profile: data.profile,
+                                faculty: data.faculty,
+                                qrCode: data.qrCode,
+                            })
+                        );
+                        showPopup("Login Successful", "Welcome back!", () => {
+                            window.location.href = "Home.html";
+                        });
+                    } else {
+                        showPopup("Unexpected Response", "Something went wrong. Try again.");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    showPopup("Server Error", error.error || "Login failed. Server might be down.");
+                });
+        });
+</script>
+</body>
+</html>
