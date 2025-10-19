@@ -70,33 +70,33 @@ public class CardController {
 
             Card newCard = cardService.create(card);
 
-            // Converting student details to QRCode
-            String qrContent = String.format(
-                    "Student ID: %s\nTitle: %s %s %s\nCourse: %s\nPhoto: %s",
-                    card.getStudentId(),
-                    card.getTitle(),
-                    card.getInitials(),
-                    card.getSurname(),
-                    card.getCourse(),
-                    photo
-
-            );
-            // Generate QR code
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            Map<EncodeHintType, Object> hints = new HashMap<>();
-            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-
-            BitMatrix bitMatrix = new QRCodeWriter().encode(
-                    qrContent,
-                    BarcodeFormat.QR_CODE,
-                    200,
-                    200,
-                    hints
-            );
-
-            MatrixToImageWriter.writeToStream(bitMatrix, "PNG", outputStream);
-            byte[] qrCodeBytes = outputStream.toByteArray();
-            String qrCode = Base64.getEncoder().encodeToString(qrCodeBytes);
+//            // Converting student details to QRCode
+//            String qrContent = String.format(
+//                    "Student ID: %s\nTitle: %s %s %s\nCourse: %s\nPhoto: %s",
+//                    card.getStudentId(),
+//                    card.getTitle(),
+//                    card.getInitials(),
+//                    card.getSurname(),
+//                    card.getCourse(),
+//                    photo
+//
+//            );
+//            // Generate QR code
+//            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//            Map<EncodeHintType, Object> hints = new HashMap<>();
+//            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+//
+//            BitMatrix bitMatrix = new QRCodeWriter().encode(
+//                    qrContent,
+//                    BarcodeFormat.QR_CODE,
+//                    200,
+//                    200,
+//                    hints
+//            );
+//
+//            MatrixToImageWriter.writeToStream(bitMatrix, "PNG", outputStream);
+//            byte[] qrCodeBytes = outputStream.toByteArray();
+//            String qrCode = Base64.getEncoder().encodeToString(qrCodeBytes);
 
             // Encode photo byte to Base64 String (if photo exists)
             String base64Photo = "";
@@ -107,8 +107,8 @@ public class CardController {
 
             return ResponseEntity.ok(Map.of(
                     "studentId", card.getStudentId(),
-                    "photo", base64Photo,
-                    "qrCode", qrCode
+                    "photo", base64Photo
+//                    "qrCode", qrCode
             ));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
@@ -119,19 +119,40 @@ public class CardController {
     public ResponseEntity<?> getCardDetails(@PathVariable Long studentId) {
         try {
             Card card = cardService.read(studentId);
+
+            if (card == null) {
+                return ResponseEntity.badRequest().body(Map.of("error", "Card not found"));
+            }
+
+            // ✅ Convert photo bytes to Base64 string
+            String base64Photo = "";
+            if (card.getPhoto() != null && card.getPhoto().length > 0) {
+                base64Photo = Base64.getEncoder().encodeToString(card.getPhoto());
+                base64Photo = "data:image/png;base64," + base64Photo;
+            }
+
+            // ✅ Convert QR code bytes to Base64 (if applicable)
+            String base64QrCode = "";
+            if (card.getQrCode() != null && card.getQrCode().length > 0) {
+                base64QrCode = Base64.getEncoder().encodeToString(card.getQrCode());
+            }
+
             return ResponseEntity.ok(Map.of(
                     "studentId", card.getStudentId(),
                     "title", card.getTitle(),
                     "initials", card.getInitials(),
                     "surname", card.getSurname(),
-                    "photo", card.getPhoto(),
-                    "qrCode", card.getQrCode()
+                    "course", card.getCourse(),
+                    "photo", base64Photo,
+                    "qrCode", base64QrCode
             ));
+
         } catch (RuntimeException e) {
             System.out.println("Card not found");
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
+
 
     // Method to get card details from the database using cardId
     @GetMapping("/GetCard/{studentId}")
