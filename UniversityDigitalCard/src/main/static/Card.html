@@ -9,7 +9,11 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: white;
+      background-image: url("https://raw.githubusercontent.com/SandileSibiya/Project3-UniDigital/main/UniversityDigitalCard/src/main/static/Images/BackImg2.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      overflow-y: hidden;
     }
 
     .container {
@@ -20,6 +24,7 @@
     }
 
     .header {
+      color: black;
       text-align: center;
       font-weight: bold;
       padding: 20px 0;
@@ -28,7 +33,7 @@
       display: flex;
       justify-content: center;
       gap: 100px;
-      margin-bottom: 30px;
+      margin-bottom: 10px;
     }
 
     .sub-title,
@@ -48,42 +53,55 @@
 
     .card-preview {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
 
     .card-img {
-      border : 2px solid blue;
+      border : 3px solid rgba(25, 104, 157, 100);
       border-radius: 15px;
       width: 100%;
       max-width: 300px;
-      /*box-shadow: -2px 3px 2px rgba(0, 0, 0, 0.5);*/
+      height: 160px;
       box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
       z-index: 1;
     }
-    .card-img2 {
-      border : 2px solid blue;
-      border-radius: 15px;
-      width: 100%;
-      max-width: 300px;
-      margin-top: -190px;
-      margin-left: 50px;
-      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
-      z-index: -1;
-    }
+    /*.card-img2 {*/
+    /*  border : 2px solid blue;*/
+    /*  border-radius: 15px;*/
+    /*  width: 100%;*/
+    /*  max-width: 300px;*/
+    /*  margin-top: -190px;*/
+    /*  margin-left: 50px;*/
+    /*  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);*/
+    /*  z-index: -1;*/
+    /*}*/
 
     .toggle-section, .tap-session {
-      border: 2px solid black;
+      border: 2px solid rgba(25, 104, 157, 100);
       border-radius: 10px;
       padding: 15px;
       margin: 10px 0;
-      background-color: #fff;
+      background-color: rgba(25, 104, 157, 0.15);
       box-shadow: -2px 3px 2px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(15px);
+    }
+    /*.Creating a hover for the toggle session*/
+    .toggle-section:hover, .tap-session:hover {
+      color: white;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+      transform: scale(1.02);
+      transition: transform 0.3s ease;
     }
 
     .toggle-section p, .tap-session p {
       margin: 5px 0 0;
       font-size: 14px;
-      color: #333;
+      color: black;
+    }
+
+    .tap-session:hover p,
+    .tap-session:hover span {
+      color: white;
     }
 
     .toggle-label {
@@ -150,10 +168,16 @@
       font-weight: bolder;
       color: black;
     }
+
+    .tap-session:hover .arrow,
+    .tap-session:hover p,
+    .tap-session:hover span{
+      color: white;
+    }
     .card-preview {
       position: relative;
       width: 300px;
-      height: 190px;
+      height: 160px;
       margin: auto;
       perspective: 1000px;
     }
@@ -182,6 +206,67 @@
       transform: translateX(-50%) rotateY(0deg);
     }
 
+    /* Popup Modal Styles */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .popup {
+      background: rgba(25, 104, 157, 0.2);
+      border: 2px solid rgba(25, 104, 157, 1);
+      backdrop-filter: blur(5px);
+      border-radius: 15px;
+      padding: 30px;
+      text-align: center;
+      color: white;
+      width: 280px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .popup h3 {
+      margin: 0 0 10px;
+      color: white;
+    }
+
+    .popup p {
+      margin: 0 0 15px;
+      font-size: 14px;
+    }
+
+    .popup button {
+      background-color: #2674a8;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 8px 20px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .popup button:hover {
+      background-color: #0e4265;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
   </style>
 </head>
 <body>
@@ -190,8 +275,8 @@
   <div class="header">CARD</div>
 
   <div class="top-nav">
-    <div class="sub-title">Front View</div>
-    <div class="sub-title2">Back View</div>
+    <div class="sub-title">FRONT VIEW</div>
+    <div class="sub-title2">BACK VIEW</div>
   </div>
 
   <div class="card-preview">
@@ -241,6 +326,20 @@
     <p>Block your card if it lost or stolen to prevent anyone gaining access with your card..</p>
   </div>
 
+<!--  <div class="toggle-section">-->
+<!--    <div class="toggle-label">-->
+<!--      <span>Block</span>-->
+<!--      <label class="switch">-->
+<!--        <input type="checkbox" unchecked>-->
+<!--        <span class="slider"></span>-->
+<!--      </label>-->
+<!--    </div>-->
+<!--    <p>Turn on the feature to block your card to avoid someone else using your card to gain access.</p>-->
+<!--  </div>-->
+
+<!--
+-->
+
   <div class="tap-session">
     <div>
       <strong>NFC Tap Session</strong>
@@ -249,7 +348,33 @@
     <span class="arrow">&#8594;</span>
   </div>
 </div>
+
+<!-- 🔹 Popup Modal -->
+<div class="popup-overlay" id="popupOverlay">
+  <div class="popup" id="popupBox">
+    <h3 id="popupTitle">Message</h3>
+    <p id="popupMessage">This is a popup message.</p>
+    <button id="popupButton">OK</button>
+  </div>
+</div>
 <script>
+  // Show popup function
+  function showPopup(message, title = "Notification") {
+    const overlay = document.getElementById("popupOverlay");
+    const popupTitle = document.getElementById("popupTitle");
+    const popupMessage = document.getElementById("popupMessage");
+    const popupButton = document.getElementById("popupButton");
+
+    popupTitle.textContent = title;
+    popupMessage.textContent = message;
+
+    overlay.style.display = "flex"; // Show popup
+
+    popupButton.onclick = function() {
+      overlay.style.display = "none"; // Hide popup
+    };
+  }
+
   // function for back arrow
     document.querySelector('.back-icon').addEventListener('click', function() {
         window.history.back();
@@ -270,7 +395,25 @@
 
   //function for the arrow
     document.querySelector('.arrow').addEventListener('click', function() {
-        window.location.href = "NFCTapSession.html"
+      // Check if picture is available in sessionStorage if not deny access
+        const userData = JSON.parse(sessionStorage.getItem('currentUser'));
+        if (!userData || !userData.photo) {
+            showPopup("No user data card details found. Please register your card first.");
+            return;
+        }
+
+      // Check if Block and NFC Tap toggle enable deny access
+      if (!document.querySelectorAll('.toggle-section .switch input')[1].checked) {
+          showPopup("NFC Tap Integration is disabled. Please enable it to proceed.");
+          return;
+      }
+        if (document.querySelectorAll('.toggle-section .switch input')[2].checked) {
+            showPopup("Card is blocked. Please unblock it to proceed.");
+            return;
+        }
+        else {
+          window.location.href = "NFCTapSession.html"
+        }
     });
 
 </script>
