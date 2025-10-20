@@ -236,7 +236,7 @@
     <button class="btn" id="doneBtn">DONE</button>
 </div>
 
-<!-- 🔹 Popup Modal -->
+<!-- Popup Modal -->
 <div class="popup-overlay" id="popupOverlay">
     <div class="popup" id="popupBox">
         <h3 id="popupTitle">Message</h3>
@@ -319,7 +319,7 @@
             const date = new Date();
 
             if (!studentId || !surname || !course || !title || !initials) {
-                showPopup('Please fill all required fields.');
+                showPopup('Please fill all the required fields.');
                 return;
             }
             else if (!photoUpload.files.length) {
