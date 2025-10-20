@@ -315,7 +315,7 @@
             })
             .catch((error) => {
               // Check if user already exist in server and other errors
-              showPopup("Error: " + (error.message || "Already registered user with this email or student number"));
+              showPopup("Error " + (error.message || "Already registered user with this email or student number"));
             });
   });
 
