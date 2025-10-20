@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register Card</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url("https://raw.githubusercontent.com/SandileSibiya/Project3-UniDigital/main/UniversityDigitalCard/src/main/static/Images/BackImg2.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .header {
+            text-align: center;
+            font-weight: bold;
+            padding: 20px 0;
+            font-size: 18px;
+        }
+        .back-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .profile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .profile-circle {
+            background-color: #2674a8;
+            color: black;
+            border: 4px solid black;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 30px;
+            flex-shrink: 0;
+        }
+
+        .profile-info {
+            text-align: left;
+            color: black;
+            font-weight: bolder;
+        }
+        .profile-info div {
+            margin: 0;
+        }
+        .student-details {
+            font-weight: normal;
+            color: white;
+        }
+        .card-form {
+            color: black;
+            border: 3px solid rgba(25, 104, 157, 1);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        .card-form h3 {
+            color: black;
+            margin: 0 0 10px 0;
+            text-align: center;
+        }
+        /*Image layout in register*/
+        .card-form img {
+            width: 35px;
+            height: 35px;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        .card-form input {
+            width: 94%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid black;
+            border-radius: 8px;
+            box-shadow: -2px 3px 2px rgba(0, 0, 0, 0.5);
+            font-size: 14px;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            background-color: #2674a8;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: #0e4265;
+        }
+        .upload-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .browse-btn {
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #2674a8;
+            border: none;
+            cursor: pointer;
+        }
+        .browse-btn:hover {
+            background-color: #0e4265;
+        }
+        small {
+            color: black;
+            display: block;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        /* 🔹 Popup Modal Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+
+        .popup {
+            background: rgba(25, 104, 157, 0.2);
+            border: 2px solid rgba(25, 104, 157, 1);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            color: white;
+            width: 280px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .popup h3 {
+            margin: 0 0 10px;
+            color: white;
+        }
+
+        .popup p {
+            margin: 0 0 15px;
+            font-size: 14px;
+        }
+
+        .popup button {
+            background-color: #2674a8;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .popup button:hover {
+            background-color: #0e4265;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="back-icon" onclick="window.location.href='Home.html'">←</div>
+    <div class="header">REGISTER CARD</div>
+
+    <div class="profile">
+        <div class="profile-circle" id="profileInitials">JS</div>
+        <div class="profile-info">
+            <div id="fullName">MR JH SMITH</div>
+            <div class="student-details" id="studentDetails">STUDENT<br />012345679</div>
+        </div>
+    </div>
+
+    <div class="card-form">
+        <h3><img src="https://img.icons8.com/ios-filled/50/edit-property.png"> REGISTER CARD</h3>
+        <small>Edit Your Card Details Here</small>
+        <label>Title</label>
+        <input type="text" placeholder="Mr/Ms.." id="title" />
+        <label>Initials</label>
+        <input type="text" placeholder="Initials..." id="initials" />
+        <label>Surname</label>
+        <input type="text" placeholder="Surname..." id="surname" />
+        <label>Course</label>
+        <input type="text" placeholder="Course..." id="department" />
+        <label>Student Number</label>
+        <input type="text" placeholder="Student Number..." id="studentNumber" />
+
+        <button class="btn" id="fillDetailsBtn">FILL IN DETAILS</button>
+
+        <div class="upload-section">
+            <label>Upload Photo</label>
+            <input type="file" class="browse-btn" id="photoUpload" accept="image/*" />
+        </div>
+    </div>
+
+    <button class="btn" id="doneBtn">DONE</button>
+</div>
+
+<!-- 🔹 Popup Modal -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup" id="popupBox">
+        <h3 id="popupTitle">Message</h3>
+        <p id="popupMessage">This is a popup message.</p>
+        <button id="popupButton">OK</button>
+    </div>
+</div>
+<script>
+    // Show popup function
+    function showPopup(message, title = "Notification") {
+        const overlay = document.getElementById("popupOverlay");
+        const popupTitle = document.getElementById("popupTitle");
+        const popupMessage = document.getElementById("popupMessage");
+        const popupButton = document.getElementById("popupButton");
+
+        popupTitle.textContent = title;
+        popupMessage.textContent = message;
+
+        overlay.style.display = "flex"; // Show popup
+
+        popupButton.onclick = function() {
+            overlay.style.display = "none"; // Hide popup
+        };
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Fetching current user data from sessionStorage
+        const userData = JSON.parse(sessionStorage.getItem('currentUser'));
+
+        if (userData) {
+            const profileInitials = document.getElementById('profileInitials');
+            const fullName = document.getElementById('fullName');
+            const studentDetails = document.getElementById('studentDetails');
+
+            // Initializing initials of name and surname
+            const profile = userData.profile;
+            // Initializing initials of name and middleName
+            const initials = userData.initials;
+
+            // Initializing tittle and convert it to uppercase
+            const title = userData.tittle.toUpperCase();
+
+            // Display initials of name and surname in profile circle
+            profileInitials.textContent = profile;
+
+            // Display initials and full surname
+            fullName.textContent = `${title} ${initials} ${userData.surname?.toUpperCase() || ''}`;
+
+            // Display student number
+            studentDetails.innerHTML = `STUDENT<br />${userData.studentId}`;
+        } else {
+
+            window.location.href = 'LogIn.html';
+        }
+
+        // function for fill in the details button
+        document.getElementById('fillDetailsBtn').addEventListener('click', function () {
+            if (!userData) return;
+
+            const title = userData.tittle;
+            const initials = userData.initials ||
+                (userData.firstName ? userData.firstName.charAt(0).toUpperCase() : '') +
+                (userData.surname ? userData.surname.charAt(0).toUpperCase() : '');
+
+            document.getElementById('title').value = title;
+            document.getElementById('initials').value = initials;
+            document.getElementById('surname').value = userData.surname || '';
+            document.getElementById('studentNumber').value = userData.studentId || '';
+            document.getElementById('department').value = userData.course || '';
+        });
+        // function for done button
+        document.getElementById('doneBtn').addEventListener('click', async function () {
+            const studentId = document.getElementById('studentNumber').value;
+            const title = document.getElementById('title').value;
+            const initials = document.getElementById('initials').value;
+            const surname = document.getElementById('surname').value;
+            const course = document.getElementById('department').value;
+            const photoFile = document.getElementById('photoUpload').files[0];
+            // Add today date value
+            const date = new Date();
+
+            if (!studentId || !surname || !course || !title || !initials) {
+                showPopup('Please fill all required fields.');
+                return;
+            }
+            else if (!photoUpload.files.length) {
+                showPopup('Please upload a photo.');
+                return;
+            }
+            // Check if student details match the one in session storage
+            else if (surname !== userData.surname || course !== userData.course ||
+                initials !== userData.initials || title !== userData.tittle) {
+                showPopup('Student details does not match the logged-in user. Please use the the fill in details button to auto-fill.');
+                return;
+            }
+
+            // Check the size of photo 5 MB
+            else if (photoFile.size > 5 * 1024 * 1024) {
+                showPopup('Photo size exceeds 5 MB. Please upload a smaller photo.');
+                return;
+            }
+            // Check if the photo is in jpg, jpeg or png format
+            else if (!['image/jpeg', 'image/png'].includes(photoFile.type)) {
+                showPopup('Please upload a valid photo in JPG or PNG format.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('studentId', studentId);
+            formData.append('title', title);
+            formData.append('initials', initials);
+            formData.append('surname', surname);
+            formData.append('course', course);
+            function formatDate(date) {
+                const options = {
+                    day: "2-digit",
+                    month: "short",  // day month in short
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
+                    hour12: false
+                };
+                // Example output: "25 Sep 2025, 15:08:42"
+                return date.toLocaleString("en-GB", options).replace(",", "");
+            }
+
+            formData.append("date", formatDate(date));
+            if (photoFile) formData.append('photo', photoFile);
+
+
+            try {
+                const response = await fetch('http://localhost:8080/cputdigitalcard.com/api/cputdigitalcard.com/AddCard', {
+                    method: 'POST',
+                    body: formData
+
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showPopup('Card registered successfully.');
+
+                    // Update sessionStorage with the new photo
+                    const usersData = JSON.parse(sessionStorage.getItem('currentUser'));
+                    if (photoFile) {
+
+                        // Convert the new photo to base64
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+
+                            const base64Photo = e.target.result;
+                            userData.photo = base64Photo;
+
+                            sessionStorage.setItem('currentUser', JSON.stringify(userData));
+
+                            // Redirect to home page or wherever appropriate
+                            window.location.href = 'Home.html';
+                        };
+                        reader.readAsDataURL(photoFile);
+                    } else {
+                        window.location.href = 'Home.html';
+                    }
+                } else {
+                    showPopup('Error: ' + result.error);
+                }
+            } catch (error) {
+                console.error(error);
+                showPopup('Unexpected error occurred.');
+            }
+        });
+    });
+
+</script>
+</body>
+</html>
