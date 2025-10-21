@@ -331,79 +331,11 @@
         slot.addEventListener("click", () => {
             document.querySelector(".time-slot.selected")?.classList.remove("selected");
             slot.classList.add("selected");
-            selectedTime = slot.textContent;
         });
-    });
-
-    // Confirm booking
-    document.getElementById("confirmBtn").addEventListener("click", () => {
-        if (!selectedDate || !selectedTime) {
-            showPopup("Please select a date and time!");
-            return;
-        }
-
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        if (selectedDate < today) {
-            showPopup("Please select a valid date, not in the past!");
-            return;
-        }
-        if (selectedDate.getDay() === 0 || selectedDate.getDay() === 6) {
-            showPopup("Please select a weekday (Monday to Friday)!");
-            return;
-        }
-        const maxDate = new Date();
-        maxDate.setDate(today.getDate() + 15);
-        if (selectedDate > maxDate) {
-            showPopup("Please select a date within the next 15 days!");
-            return;
-        }
-
-        const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-        if (!currentUser) {
-            showPopup("No logged-in user found. Please log in again.");
-            window.location.href = "LogIn.html";
-            return;
-        }
-
-        const booking = {
-            studentId: currentUser.studentId,
-            bookingDate: formatDate(selectedDate),
-            bookingTime: selectedTime
-        };
-
-        fetch("http://localhost:8080/cputdigitalcard.com/api/cputdigitalcard.com/Book", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(booking)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(err => { throw err; });
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Booking confirmed
-                showPopup("Booking confirmed for " + booking.bookingDate + " at " + booking.bookingTime);
-
-                // Update sessionStorage with booking info
-                const updatedUser = {
-                    ...currentUser,
-                    bookingDate: booking.bookingDate,
-                    bookingTime: booking.bookingTime
-                };
-                sessionStorage.setItem("currentUser", JSON.stringify(updatedUser));
-
-                console.log("Updated sessionStorage:", updatedUser);
-            })
-            .catch(() => {
-                showPopup("Booking failed. Please try again.");
-            });
     });
 
     renderCalendar(currentDate);
 </script>
+
 </body>
 </html>
