@@ -8,115 +8,193 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            background-color: white;
-            padding: 0 15px;
+            padding: 0;
             text-align: center;
+            background-image: url("https://raw.githubusercontent.com/SandileSibiya/Project3-UniDigital/main/UniversityDigitalCard/src/main/static/Images/BackImg3.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: auto;
         }
-
-
+        body::-webkit-scrollbar {
+            display: none;
+        }
         header {
-            position: relative;
+            text-align: center;
             font-weight: bold;
-            padding: 15px 0;
-            font-size: 1.2em;
-            border-bottom: 1px solid #ccc;
+            padding: 20px 0;
+            font-size: 18px;
         }
-
         .back-arrow {
             position: absolute;
             left: 15px;
             top: 15px;
-            font-size: 20px;
+            font-size: 25px;
             cursor: pointer;
         }
+        .container {
+            width: 83%;
+            max-width: 400px;
+            background-color: rgba(25, 104, 157, 0.15);
+            border: 3px solid rgba(25, 104, 157, 100);
+            border-radius: 10px;
+            backdrop-filter: blur(50px);
+            margin: 20px auto;
+            padding: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 
+        }
         .section-title {
             margin-top: 20px;
             font-weight: bold;
         }
-
         .calendar-nav {
             display: flex;
             justify-content: center;
             align-items: center;
             margin: 10px 0;
         }
-
         .calendar-nav button {
             background: none;
             border: none;
-            font-size: 20px;
+            font-size: 10px;
             margin: 0 10px;
             cursor: pointer;
         }
-
         .month-year {
             font-weight: bold;
         }
-
         .calendar {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 5px;
+            font-size: 14px;
         }
-
         .calendar div {
-            padding: 10px;
+            padding: 8px;
             border-radius: 5px;
             cursor: pointer;
         }
-
         .calendar .day {
-            color: gray;
+            color: black;
             font-weight: bold;
-            background-color: #f0f0f0;
+            background-color: white;
         }
-
+        .calendar .date {
+            background-color: white;
+            color: black;
+        }
         .calendar .date:hover {
-            background-color: #ddd;
+            background-color: transparent;
+            color: white;
         }
-
         .calendar .selected {
-            background-color: #2b7cbf;
+            background-color: #0e4265;
             color: white;
             font-weight: bold;
         }
-
         .time-slots {
             margin: 20px 0;
         }
-
         .time-slot {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 8px 16px;
             margin: 5px;
             background-color: #eee;
             border-radius: 20px;
             cursor: pointer;
         }
-
-        .time-slot.selected {
-            background-color: #2b7cbf;
+        .time-slot:hover {
+            background-color: transparent;
+            border: 1px solid white;
             color: white;
         }
-
+        .time-slot.selected {
+            background-color: #0e4265;
+            color: white;
+        }
         .confirm-btn {
-            width: 80%;
-            margin-top: 20px;
-            padding: 15px 30px;
+            width: 90%;
+            margin-top: 10px;
+            padding: 12px;
             font-weight: bold;
             font-size: 16px;
             border: none;
-            border-radius: 5px;
-            background-color: #2b7cbf;
-            color: black;
+            border-radius: 50px;
+            background-color: #2674a8;
+            color: white;
             cursor: pointer;
         }
-
+        .confirm-btn:hover {
+            background-color: #0e4265;
+            color: white;
+            border: none;
+        }
         .footer {
-            margin: 30px 0 10px;
+            margin: 20px 0 10px;
             font-size: 12px;
-            color: #333;
+            color: white;
+        }
+        /* Popup Modal Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+
+        .popup {
+            background: rgba(25, 104, 157, 0.2);
+            border: 2px solid rgba(25, 104, 157, 1);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            color: white;
+            width: 280px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .popup h3 {
+            margin: 0 0 10px;
+            color: white;
+        }
+
+        .popup p {
+            margin: 0 0 15px;
+            font-size: 14px;
+        }
+
+        .popup button {
+            background-color: #2674a8;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .popup button:hover {
+            background-color: #0e4265;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
     </style>
 </head>
@@ -127,36 +205,76 @@
     COLLECTION SLOT
 </header>
 
-<div class="section-title">CHOOSE A PICK-UP DAY:</div>
+<div class="container">
+    <div class="section-title">CHOOSE A PICK-UP DAY:</div>
 
-<div class="calendar-nav">
-    <button id="prevMonth">&#8592;</button>
-    <div class="month-year" id="monthYear"></div>
-    <button id="nextMonth">&#8594;</button>
+    <div class="calendar-nav">
+        <button id="prevMonth">&#8592;</button>
+        <div class="month-year" id="monthYear"></div>
+        <button id="nextMonth">&#8594;</button>
+    </div>
+
+    <div class="calendar" id="calendar"></div>
+
+    <div class="section-title">CHOOSE A PICK-UP TIME:</div>
+    <div class="time-slots">
+        <div class="time-slot">09:00 - 11:00</div>
+        <div class="time-slot">11:00 - 13:00</div>
+        <div class="time-slot">14:00 - 16:00</div>
+    </div>
+
+    <button class="confirm-btn" id="confirmBtn">CONFIRM</button>
 </div>
-
-<div class="calendar" id="calendar">
-    <!-- Days and dates will be dynamically generated here -->
-</div>
-
-<div class="section-title">CHOOSE A PICK-UP TIME:</div>
-<div class="time-slots">
-    <div class="time-slot">09:00 - 10:00</div>
-    <div class="time-slot">12:00 - 13:00</div>
-    <div class="time-slot">14:00 - 15:00</div>
-</div>
-
-<button class="confirm-btn">CONFIRM</button>
 
 <div class="footer">
-    Need Help? Contact Admin@Example.Com<br/>
+    © 2025 UniDigital • Cape Peninsula University of Technology<br/>
+    Need Help? Contact unidigital.support@mycput.ac.za<br/>
     (021) 324-56789
 </div>
 
+<!-- Popup Modal -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup" id="popupBox">
+        <h3 id="popupTitle">Message</h3>
+        <p id="popupMessage">This is a popup message.</p>
+        <button id="popupButton">OK</button>
+    </div>
+</div>
 <script>
+    // Show popup function
+    function showPopup(message, title = "Notification") {
+        const overlay = document.getElementById("popupOverlay");
+        const popupTitle = document.getElementById("popupTitle");
+        const popupMessage = document.getElementById("popupMessage");
+        const popupButton = document.getElementById("popupButton");
+
+        popupTitle.textContent = title;
+        popupMessage.textContent = message;
+
+        overlay.style.display = "flex"; // Show popup
+
+        popupButton.onclick = function() {
+            overlay.style.display = "none"; // Hide popup
+        };
+    }
+
+    // functionality for back arrow
+    document.querySelector(".back-arrow").addEventListener("click", () => {
+        window.location.href = "Notification.html";
+    });
+
+
     const calendarEl = document.getElementById("calendar");
     const monthYearEl = document.getElementById("monthYear");
     let currentDate = new Date();
+    let selectedDate = null;
+    let selectedTime = null;
+
+    // Format date as yyyy-MM-dd
+    const formatDate = (date) => {
+        const pad = (n) => String(n).padStart(2, "0");
+        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+    };
 
     const renderCalendar = (date) => {
         const year = date.getFullYear();
@@ -175,13 +293,12 @@
             calendarEl.appendChild(dayEl);
         }
 
-        // Empty cells before first day
+        // Empty cells
         for (let i = 0; i < firstDay.getDay(); i++) {
-            const empty = document.createElement("div");
-            calendarEl.appendChild(empty);
+            calendarEl.appendChild(document.createElement("div"));
         }
 
-        // Fill the days
+        // Fill days
         for (let i = 1; i <= lastDay.getDate(); i++) {
             const dateEl = document.createElement("div");
             dateEl.classList.add("date");
@@ -190,12 +307,12 @@
             dateEl.addEventListener("click", () => {
                 document.querySelector(".calendar .selected")?.classList.remove("selected");
                 dateEl.classList.add("selected");
+                selectedDate = new Date(year, month, i);
             });
 
             calendarEl.appendChild(dateEl);
         }
 
-        // Set month & year text
         monthYearEl.textContent = date.toLocaleString("default", { month: "long", year: "numeric" });
     };
 

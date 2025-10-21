@@ -124,14 +124,14 @@ public class CardController {
                 return ResponseEntity.badRequest().body(Map.of("error", "Card not found"));
             }
 
-            // ✅ Convert photo bytes to Base64 string
+            //  Convert photo bytes to Base64 string
             String base64Photo = "";
             if (card.getPhoto() != null && card.getPhoto().length > 0) {
                 base64Photo = Base64.getEncoder().encodeToString(card.getPhoto());
                 base64Photo = "data:image/png;base64," + base64Photo;
             }
 
-            // ✅ Convert QR code bytes to Base64 (if applicable)
+            //  Convert QR code bytes to Base64 (if applicable)
             String base64QrCode = "";
             if (card.getQrCode() != null && card.getQrCode().length > 0) {
                 base64QrCode = Base64.getEncoder().encodeToString(card.getQrCode());

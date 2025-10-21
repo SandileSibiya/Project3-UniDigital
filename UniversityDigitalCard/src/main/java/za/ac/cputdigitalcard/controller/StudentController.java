@@ -47,8 +47,15 @@ public class StudentController {
     public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
         String email = credentials.get("email");
         String password = credentials.get("password");
+
         try {
             Student student = studentService.validateUserLogIn(email, password);
+
+            // Check user status
+            if (!"Active".equalsIgnoreCase(student.getStatus())) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body(Map.of("error", "Account is not active"));
+            }
 
             // Converting gender to title
             String tittle = "Ms";
@@ -80,13 +87,13 @@ public class StudentController {
 
             // Converting student details to QRCode
             String qrContent = String.format(
-                    "Student ID: %s\nName: %s %s %s\nCourse: %s\nEmail: %s",
-                    student.getStudentId(),
+                    "Name: %s %s %s\nCourse: %s\nStudent ID: %s",
                     tittle,
                     student.getFirstName(),
                     student.getSurname(),
                     student.getCourse(),
-                    student.getEmail()
+                    student.getStudentId()
+//                    student.getEmail()
             );
 
             // Generate QR code
@@ -106,12 +113,12 @@ public class StudentController {
             byte[] qrCodeBytes = outputStream.toByteArray();
             String qrCode = Base64.getEncoder().encodeToString(qrCodeBytes);
 
-            // Encode photo byte to Base64 String (if photo exists)
-            String base64Photo = "";
-            if (student.getPhoto() != null) {
-                base64Photo = Base64.getEncoder().encodeToString(student.getPhoto());
-                base64Photo = "data:image/png;base64," + base64Photo;
-            }
+//            // Encode photo byte to Base64 String (if photo exists)
+//            String base64Photo = "";
+//            if (student.getPhoto() != null) {
+//                base64Photo = Base64.getEncoder().encodeToString(student.getPhoto());
+//                base64Photo = "data:image/png;base64," + base64Photo;
+//            }
 
 
             return ResponseEntity.ok(Map.of(
@@ -119,11 +126,12 @@ public class StudentController {
                     "initials", initials,
                     "firstName", student.getFirstName(),
                     "surname", student.getSurname(),
+                    "contactNumber", student.getContactNumber(),
+                    "faculty", student.getFaculty(),
                     "course", student.getCourse(),
-                    "tittle", tittle,
+                    "title", tittle,
                     "profile", profile,
-                    "email", student.getEmail(),
-                    "photo", base64Photo,
+//                    "status", student.getStatus()
                     "qrCode", qrCode
             ));
         } catch (RuntimeException e) {
@@ -134,43 +142,35 @@ public class StudentController {
         }
     }
 
+
     // Method to upload photo for student card
-    @PostMapping(value = "/RegisterCard")
-    public ResponseEntity<?> updateCardDetails(
+    @PostMapping(value = "/UpdateProfile")
+    public ResponseEntity<?> updateProfile(
             @RequestParam("studentId") Long studentId,
-            @RequestParam(value = "photo", required = false) MultipartFile photoFile) {
+            @RequestParam("firstName") String firstName,
+            @RequestParam("surname") String surname,
+            @RequestParam("contactNumber") String contactNumber,
+            @RequestParam("faculty") String faculty,
+            @RequestParam("course") String course) {
         try {
             Student student = studentService.findById(studentId);
             if (student == null) {
                 throw new RuntimeException("Student not found");
             }
 
-            // Update card-related fields
+            // Update profile-related fields
             student = new Student.Builder()
                     .copy(student)
-                    .setPhoto(photoFile != null ? photoFile.getBytes() : student.getPhoto())
+                    .setFirstName(firstName)
+                    .setSurname(surname)
+                    .setContactNumber(contactNumber)
+                    .setFaculty(faculty)
+                    .setCourse(course)
                     .build();
 
             studentService.update(student);
 
             return ResponseEntity.ok(Map.of("message", "Card updated successfully"));
-        } catch (IOException | RuntimeException e) {
-            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
-        }
-    }
-
-    // Method that retrieves student photo
-    @GetMapping("/NFCTappingSession")
-    public ResponseEntity<?> getStudentPhoto(@RequestParam Long studentId) {
-        try {
-            Student student = studentService.findById(studentId);
-            if (student == null || student.getPhoto() == null) {
-                System.out.println("Student name :" + student.getFirstName());
-                throw new RuntimeException("Student or photo not found");
-            }
-            
-            String base64Photo = Base64.getEncoder().encodeToString(student.getPhoto());
-            return ResponseEntity.ok(Map.of("photo", base64Photo));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }

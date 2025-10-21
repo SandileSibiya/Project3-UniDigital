@@ -26,7 +26,6 @@ class StudentServiceTest {
             .setFaculty("ICT : AppDev")
             .setCourse("Business Management")
             .setGender("Male")
-            .setAddress("1 Main road, Athlone, Cape Town")
             .setEmail("200975623@mycput.ac.za")
             .setPassword("Sib040114")
             .build();

@@ -29,18 +29,14 @@ public class Student {
     @Column(name = "gender", nullable = false)
     private String gender;
 
-    @Column(name = "address", nullable = false)
-    private String address;
-
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Lob // Use for large object like images
-    @Column(name = "photo", columnDefinition = "LONGBLOB")
-    private byte[] photo;
+    @Column(name = "status", nullable = true)
+    private String status;
 
     // Constructors, getters, and setterss
     protected Student() {}
@@ -54,10 +50,10 @@ public class Student {
         this.faculty = builder.faculty;
         this.course = builder.course;
         this.gender = builder.gender;
-        this.address = builder.address;
         this.email = builder.email;
         this.password = builder.password;
-        this.photo = builder.photo;
+        this.status = "Active";
+
     }
 
     // Getters
@@ -85,17 +81,15 @@ public class Student {
     public String getGender() {
         return gender;
     }
-    public String getAddress() {
-        return address;
-    }
     public String getEmail() {
         return email;
     }
     public String getPassword() {
         return password;
     }
-    public byte[] getPhoto() { return photo; }
-//    public byte[] getQrCode() { return qrCode; };
+    public String getStatus() { return status; }
+
+
 
     @Override
     public String toString() {
@@ -108,19 +102,11 @@ public class Student {
                 ", faculty='" + faculty + '\'' +
                 ", course='" + course + '\'' +
                 ", gender='" + gender + '\'' +
-                ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", photo='" + photo + '\'';
-//                ", qrCode='" + qrCode + '\'';
-    }
+                ", status='" + status + '\'';
 
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
     }
-//    public void setQrCode(byte[] photo) {
-//        this.qrCode = qrCode;
-//    }
 
     // Builder class
     public static class Builder {
@@ -132,10 +118,9 @@ public class Student {
         private String faculty;
         private String course;
         private String gender;
-        private String address;
         private String email;
         private String password;
-        private byte[] photo;
+        private String status;
 
         public Builder setStudentId(Long studentId) {
             this.studentId = studentId;
@@ -169,10 +154,7 @@ public class Student {
             this.gender = gender;
             return this;
         }
-        public Builder setAddress(String address) {
-            this.address = address;
-            return this;
-        }
+
         public Builder setEmail(String email) {
             this.email = email;
             return this;
@@ -181,8 +163,8 @@ public class Student {
             this.password = password;
             return this;
         }
-        public Builder setPhoto(byte[] photo) {
-            this.photo = photo;
+        public Builder setStatus(String status) {
+            this.status = status;
             return this;
         }
 
@@ -196,10 +178,9 @@ public class Student {
             this.faculty = student.faculty;
             this.course = student.course;
             this.gender = student.gender;
-            this.address = student.address;
             this.email = student.email;
             this.password = student.password;
-            this.photo = student.photo;
+            this.status = student.status;
             return this;
         }
         public Student build() {
