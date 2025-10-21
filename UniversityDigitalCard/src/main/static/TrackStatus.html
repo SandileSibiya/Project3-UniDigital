@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Track Status</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("https://raw.githubusercontent.com/SandileSibiya/Project3-UniDigital/main/UniversityDigitalCard/src/main/static/Images/BackImg2.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: auto;
+        }
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+
+        .header {
+            text-align: center;
+            font-weight: bold;
+            padding: 20px 0;
+            font-size: 18px;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .profile-circle {
+            background-color: white;
+            color: black;
+            border: 3.5px solid black;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 30px;
+            flex-shrink: 0;
+        }
+
+        .profile-info {
+            text-align: left;
+            color: black;
+            font-weight: bolder;
+        }
+        .profile-info div {
+            margin: 0;
+        }
+        .student-details {
+            font-weight: normal;
+            color: white;
+        }
+
+        .toggle-buttons {
+            Width: 95%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px auto;
+            border-radius: 20px;
+            overflow: hidden;
+            background-color: #0e4265;
+            border: 1px solid black;
+        }
+
+        .toggle-buttons button {
+            flex: 1;
+            padding: 10px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            background-color: transparent;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .toggle-buttons button.active {
+            background-color: rgba(25, 104, 157, 100);
+            color: white;
+            border: 2px solid black;
+        }
+        .form-section {
+            margin-top: 10px;
+        }
+
+        label {
+            display: block;
+            text-align:  center;
+            margin-bottom: 5px;
+            font-size: 1.0rem;
+            font-weight: bold;
+        }
+
+        input {
+            width: 93.5%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 2px solid black;
+            font-size: 1rem;
+        }
+
+        .search-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #2674a8;
+            color: white;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            border-radius: 25px;
+        }
+        .search-btn:hover {
+            background-color: #0e4265;
+        }
+
+        .info-box {
+            border: 2px solid rgba(25, 104, 157, 100);
+            border-radius: 15px;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-shadow: -2px 3px 2px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+        }
+
+        .info-box h3 {
+            color: black;
+            font-size: 16px;
+            margin-top: 0;
+            font-weight: bold;
+        }
+        .info-box h4 {
+            color: black;
+            margin-top: 0;
+            font-weight: bold;
+        }
+
+        .info-box p {
+            color: black;
+            margin: 5px 0;
+        }
+        .info-box:hover h4,
+        .info-box:hover p,
+        .info-box:hover span {
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 20px;
+            color: white;
+        }
+        /* 🔹 Popup Modal Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+
+        .popup {
+            background: rgba(25, 104, 157, 0.2);
+            border: 2px solid rgba(25, 104, 157, 1);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            color: white;
+            width: 280px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .popup h3 {
+            margin: 0 0 10px;
+            color: white;
+        }
+
+        .popup p {
+            margin: 0 0 15px;
+            font-size: 14px;
+        }
+
+        .popup button {
+            background-color: #2674a8;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .popup button:hover {
+            background-color: #0e4265;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="back-arrow">&#8592;</div>
+
+    <div class="header">TRACK STATUS</div>
+
+<!--    <div class="profile-container">-->
+        <div class="profile">
+            <div class="profile-circle" id="profileInitials">JS</div>
+            <div class="profile-info">
+                <div id="fullName">MR JH SMITH</div>
+                <div class="student-details" id="studentDetails">STUDENT<br />012345679</div>
+            </div>
+        </div>
+
+        <div class="info-box">
+        <div class="toggle-buttons">
+            <button id="applicationBtn" class="active">Application ID</button>
+            <button id="studentBtn">Student Number</button>
+        </div>
+
+        <!-- Card(Application) ID form -->
+        <div id="applicationForm" class="form-section">
+            <h3>Please enter application ID to track for current card that you registered</h3>
+            <label for="applicationId">Application ID</label>
+            <input type="text" id="applicationId" placeholder="Enter Application ID" />
+            <button class="search-btn">SEARCH</button>
+        </div>
+
+        <!-- Student Number form -->
+        <div id="studentForm" class="form-section" style="display:none;">
+            <h3>Please enter student number to check for current card status that you have registered.</h3>
+            <label for="studentNumber">Student Number</label>
+            <input type="text" id="studentNumber" placeholder="Enter Student Number" />
+            <button type="submit" class="search-btn">SEARCH</button>
+        </div>
+    </div>
+
+    <div class="info-box">
+        <h4>APPLICATION DETAILS</h4>
+        <p><strong>Application ID:</strong> <span id="Application"> N/A</span></p>
+        <p><strong>Submission Date:</strong> <span id="submissionDate"> N/A</span></p>
+        <p><strong>Current Status:</strong> <span id="currentStatus"> N/A</span></p>
+        <p><strong>Estimated Completion:</strong> <span id="estimatedCompletion"> 3-5 Working Days</span></p>
+
+    </div>
+
+    <div class="info-box">
+        <h4>COLLECTION INFORMATION</h4>
+        <p><strong>Delivery Option:</strong> Campus Collection</p>
+        <p><strong>Pickup Location:</strong> ELearning Building</p>
+<!--        <p><strong>Pickup Date:</strong> TBD</p>-->
+        <p><strong>Pickup Date:</strong> <span id="pickupDate">TBD</span></p>
+        <p><strong>Pickup Time:</strong> <span id="pickupTime">TBD</span></p>
+
+    </div>
+
+    <div class="footer">
+        © 2025 UniDigital • Cape Peninsula University of Technology<br/>
+        Need Help? Contact unidigital.support@mycput.ac.za<br/>
+        (021) 324-56789
+    </div>
+<!--</div>-->
+
+    <!-- Popup Modal -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup" id="popupBox">
+            <h3 id="popupTitle">Message</h3>
+            <p id="popupMessage">This is a popup message.</p>
+            <button id="popupButton">OK</button>
+        </div>
+    </div>
+    <script>
+        // Show popup function
+        function showPopup(message, title = "Notification") {
+            const overlay = document.getElementById("popupOverlay");
+            const popupTitle = document.getElementById("popupTitle");
+            const popupMessage = document.getElementById("popupMessage");
+            const popupButton = document.getElementById("popupButton");
+
+            popupTitle.textContent = title;
+            popupMessage.textContent = message;
+
+            overlay.style.display = "flex"; // Show popup
+
+            popupButton.onclick = function() {
+                overlay.style.display = "none"; // Hide popup
+            };
+        }
+
+        // Functionality for back arrow
+        document.querySelector('.back-arrow').addEventListener('click', function() {
+            window.history.back();
+        });
+
+        // Functionality for toggle buttons
+        document.getElementById('applicationBtn').addEventListener('click', function() {
+            this.classList.add('active');
+            document.getElementById('studentBtn').classList.remove('active');
+            document.getElementById('applicationForm').style.display = 'block';
+            document.getElementById('studentForm').style.display = 'none';
+        });
+        document.getElementById('studentBtn').addEventListener('click', function() {
+            this.classList.add('active');
+            document.getElementById('applicationBtn').classList.remove('active');
+            document.getElementById('applicationForm').style.display = 'none';
+            document.getElementById('studentForm').style.display = 'block';
+        });
+
+        // Fetching current user data from sessionStorage
+        const userData = JSON.parse(sessionStorage.getItem('currentUser'));
+
+        if (userData) {
+            const profileInitials = document.getElementById('profileInitials');
+            const fullName = document.getElementById('fullName');
+            const studentDetails = document.getElementById('studentDetails');
+            const pickupDate = document.getElementById('pickupDate');
+            const pickupTime = document.getElementById('pickupTime');
+
+            // Initializing initials of name and surname
+            const profile = userData.profile;
+            const initials = userData.initials;
+            const title = userData.title?.toUpperCase() || "";
+
+            // Display profile info
+            profileInitials.textContent = profile || "N/A";
+            fullName.textContent = `${title} ${initials || ""} ${userData.surname?.toUpperCase() || ""}`;
+            studentDetails.innerHTML = `STUDENT<br />${userData.studentId || "N/A"}`;
+
+            // Display pickup date & time if they exist in sessionStorage
+            if (userData.bookingDate && userData.bookingTime) {
+                pickupDate.textContent = userData.bookingDate;
+                pickupTime.textContent = userData.bookingTime;
+            } else {
+                pickupDate.textContent = "TBD";
+                pickupTime.textContent = "TBD";
+            }
+        } else {
+            showPopup('No user data found. Please log in again.');
+            window.location.href = 'LogIn.html';
+        }
+
+        // Application ID search
+        document.querySelector("#applicationForm .search-btn").addEventListener("click", function () {
+            const applicationId = document.getElementById("applicationId").value.trim();
+
+            if (!applicationId) {
+                showPopup("Please enter an Application ID.");
+                return;
+            }
+
+            fetch(`http://localhost:8080/cputdigitalcard.com/api/cputdigitalcard.com/GetCardById/${applicationId}`)
+                .then(response => {
+                    if (!response.ok) throw new Error("Network response was not ok " + response.statusText);
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        showPopup("Error: " + data.error);
+                    } else {
+                        document.getElementById("Application").textContent = data.cardId || "TBD";
+                        document.getElementById("submissionDate").textContent = data.date || "TBD";
+                        document.getElementById("currentStatus").textContent = data.status || "In production (Pending)";
+                        document.getElementById("estimatedCompletion").textContent = data.estimatedCompletion || "3-5 Working Days";
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching application details:", error);
+                    showPopup("An error occurred while fetching application details. Please try again later.");
+                });
+        });
+
+        // Student Number search
+        document.querySelector("#studentForm .search-btn").addEventListener("click", function () {
+            const studentNumber = document.getElementById("studentNumber").value.trim();
+
+            if (!studentNumber) {
+                showPopup("Please enter a Student Number.");
+                return;
+            }
+
+            fetch(`http://localhost:8080/cputdigitalcard.com/api/cputdigitalcard.com/GetCard/${studentNumber}`)
+                .then(response => {
+                    if (!response.ok) throw new Error("Network response was not ok " + response.statusText);
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        showPopup("Error: " + data.error);
+                    } else {
+                        document.getElementById("Application").textContent = data.cardId || "TBD";
+                        document.getElementById("submissionDate").textContent = data.date || "TBD";
+                        document.getElementById("currentStatus").textContent = data.status || "In production (Pending)";
+                        document.getElementById("estimatedCompletion").textContent = data.estimatedCompletion || "3-5 Working Days";
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching application details:", error);
+                    showPopup("An error occurred while fetching application details. Please try again later.");
+                });
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campus Map - NFC Gate Access Points</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    body {
+      color: black;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-image: url("https://raw.githubusercontent.com/SandileSibiya/Project3-UniDigital/main/UniversityDigitalCard/src/main/static/Images/BackImg3.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      overflow: auto;
+    }
+
+    body::-webkit-scrollbar {
+      display: none;
+    }
+
+    .container {
+      max-height: 100vh;
+      overflow-y: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+
+    .header {
+      text-align: center;
+      font-weight: bold;
+      padding: 20px 0;
+      font-size: 18px;
+    }
+
+    .back-icon {
+      position: absolute;
+      color: black;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .container {
+      background-color: rgba(25, 104, 157, 0.15);
+      border: 3px solid rgba(25, 104, 157, 1);
+      border-radius: 10px;
+      backdrop-filter: blur(50px);
+      width: 90%;
+      max-width: 400px;
+      margin: 10px auto 10px auto;
+      padding: 10px;
+    }
+
+    .map-section {
+      text-align: center;
+    }
+
+    .map-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    #map {
+      height: 300px;
+      border: 2px solid rgba(25, 104, 157, 1);
+      border-radius: 10px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+      margin-bottom: 20px;
+    }
+
+    .preview-section {
+      background-color: rgba(255, 255, 255, 0.85);
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 20px;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .preview-title {
+      font-size: 15px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .preview-image {
+      width: 100%;
+      height: 180px;
+      border-radius: 8px;
+      background-color: #f0f0f0;
+      overflow: hidden;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .preview-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .location-info {
+      font-size: 14px;
+      color: #333;
+      text-align: left;
+    }
+
+    .nfc-info {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      color: #2674a8;
+      margin-top: 8px;
+    }
+
+    .nfc-icon {
+      margin-right: 6px;
+    }
+
+    .instructions {
+      background-color: rgba(255, 255, 255, 0.85);
+      border-radius: 10px;
+      padding: 10px 15px;
+      margin-top: 15px;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .instructions h2 {
+      font-size: 15px;
+      margin-bottom: 10px;
+      text-align: center;
+      color: black;
+    }
+
+    .instructions p {
+      font-size: 13px;
+      margin-bottom: 8px;
+      position: relative;
+      padding-left: 15px;
+    }
+
+    .instructions p::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #2674a8;
+      font-weight: bold;
+    }
+
+    /* Leaflet custom markers */
+    .custom-marker {
+      background-color: #2674a8;
+      border: 3px solid white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .custom-marker.active {
+      background-color: red;
+      transform: scale(1.2);
+    }
+    footer {
+      margin-bottom: 15px;
+      text-align: center;
+      font-size: 12px;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+<div class="back-icon" onclick="window.location.href='Home.html'">←</div>
+<div class="header">CAMPUS MAP</div>
+
+<div class="container">
+  <div class="map-section">
+    <h2 class="map-title">Campus Overview</h2>
+    <div id="map"></div>
+  </div>
+
+  <div class="preview-section">
+    <h3 class="preview-title">Location Preview</h3>
+    <div class="preview-image" id="previewImage">
+      <p>Select a location to view its NFC gate</p>
+    </div>
+    <div class="location-info" id="locationInfo">
+      <p>No location selected</p>
+    </div>
+  </div>
+
+  <div class="instructions">
+    <h2>How to Use NFC Gates</h2>
+    <p>Approach the NFC gate with your student ID card or mobile device.</p>
+    <p>Hold your card/device close to the NFC reader (usually marked with an NFC symbol).</p>
+    <p>Wait for the green light and audible beep indicating access granted.</p>
+    <p>Proceed through the gate once it unlocks.</p>
+  </div>
+</div>
+<footer>
+  © 2025 UniDigital • Cape Peninsula University of Technology<br/>
+  Need Help? Contact unidigital.support@mycput.ac.za<br/>
+  (021) 324-56789
+</footer>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+  const locations = [
+    { id: 1,
+      name: "Main Library Entrance",
+      lat: -33.93037850941764,
+      lng: 18.43074737241421,
+      description: "Primary entrance to the university library with NFC access control and sometimes physical card needed. Open from 6 AM to 10 PM.",
+      image: "https://raw.githubusercontent.com/SandileSibiya/Project3-UniDigital/main/UniversityDigitalCard/src/main/static/Images/Library.png"
+    },
+    { id: 2,
+      name: "Main Gate 4, Near Hanover Street",
+      lat: -33.93052924855296,
+      lng: 18.431063863458373,
+      description: "Access to library and research facilities. Special authorization required for some areas like underground parking lot.",
+      image: "https://raw.githubusercontent.com/SandileSibiya/Project3-UniDigital/main/UniversityDigitalCard/src/main/static/Images/Gate4.png"
+    },
+    { id: 3,
+      name: "Main Gate 2",
+      lat: -33.93039417919922,
+      lng: 18.42876519894943,
+      description: "Main gate 1, Primary entrance to the university with NFC access control. This gate provides 24/7 access for authorized students and staff.",
+      image: "https://raw.githubusercontent.com/SandileSibiya/Project3-UniDigital/main/UniversityDigitalCard/src/main/static/Images/Gate2.png"
+    },
+    { id: 4,
+      name: "Main Gate 1, Near Constitution Street",
+      lat: -33.9312124715624,
+      lng: 18.42815733602787,
+      description: "Primary entrance for school staff and lecture with cars as it near parking lot. 24/7 access for authorized student and staff.",
+      image: "https://raw.githubusercontent.com/SandileSibiya/Project3-UniDigital/main/UniversityDigitalCard/src/main/static/Images/Gate1.png"
+    },
+    { id: 5,
+      name: "Main Gate 3, Near Commerce building",
+      lat: -33.92975,
+      lng: 18.43014,
+      description: "Primary entrance to the university with NFC access control. This gate provides 24/7 access for authorized students and staff.",
+      image: "https://raw.githubusercontent.com/SandileSibiya/Project3-UniDigital/main/UniversityDigitalCard/src/main/static/Images/Gate3.png"
+    },
+    { id: 6,
+      name: "Control Room Gate",
+      lat: -33.9300159940258,
+      lng: 18.430220135027767,
+      description: "Control room and underground parking lot access , and athletic facilities. Open from 6 AM to 10 PM.",
+      image: "https://raw.githubusercontent.com/SandileSibiya/Project3-UniDigital/main/UniversityDigitalCard/src/main/static/Images/Gate5.png"
+    },
+    // { id: 7,
+    //   name: "Engineering Building",
+    //   lat: -33.93085039999999,
+    //   lng: 18.42923434772682,
+    //   description: "Classrooms and study labs for Informatics and design programs. Special access for after-hours studio work.",
+    //   image: "https://raw.githubusercontent.com/SandileSibiya/Project3-UniDigital/main/UniversityDigitalCard/src/main/static/Images/Gate3.png"
+    // }
+    ];
+
+  // Initialize the map
+  const map = L.map('map').setView([-33.9305, 18.4295], 16);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  const customIcon = L.divIcon({ className: 'custom-marker', iconSize: [24, 24], iconAnchor: [12, 12] });
+  const activeIcon = L.divIcon({ className: 'custom-marker active', iconSize: [24, 24], iconAnchor: [12, 12] });
+
+  const previewImage = document.getElementById('previewImage');
+  const locationInfo = document.getElementById('locationInfo');
+  const markers = [];
+
+  locations.forEach((loc, i) => {
+    const marker = L.marker([loc.lat, loc.lng], { icon: customIcon }).addTo(map);
+    marker.on('click', () => {
+      markers.forEach(m => m.setIcon(customIcon));
+      marker.setIcon(activeIcon);
+      updatePreview(loc);
+    });
+    markers.push(marker);
+  });
+
+  function updatePreview(loc) {
+    previewImage.innerHTML = `<img src="${loc.image}" alt="${loc.name}">`;
+    locationInfo.innerHTML = `
+        <h3>${loc.name}</h3>
+        <p>${loc.description}</p>
+        <div class="nfc-info"><span class="nfc-icon">📱</span> NFC Gate Access Available</div>
+        <div class="nfc-info"><span class="nfc-icon">📍</span> ${loc.lat.toFixed(5)}, ${loc.lng.toFixed(5)}</div>
+      `;
+  }
+
+  // Initialize with the first location
+  updatePreview(locations[0]);
+  markers[0].setIcon(activeIcon);
+</script>
+</body>
+</html>

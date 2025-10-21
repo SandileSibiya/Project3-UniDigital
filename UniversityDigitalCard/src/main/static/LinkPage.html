@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Link Profile</title>
+    <style>
+        body {
+            margin: 0;
+            background-image: url("https://raw.githubusercontent.com/SandileSibiya/Project3-UniDigital/main/UniversityDigitalCard/src/main/static/Images/BackImg2.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+        }
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        .header {
+            text-align: center;
+            font-weight: bold;
+            padding: 20px 0;
+            font-size: 18px;
+        }
+        .back-icon {
+            position: absolute;
+            color: black;
+            top: 20px;
+            left: 20px;
+            font-size: 40px;
+            cursor: pointer;
+        }
+
+        .header h2 {
+            flex-grow: 1;
+            text-align: center;
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .form-box {
+            width: 90%;
+            border: 3px solid rgba(25, 104, 157, 1);
+            backdrop-filter: blur(3px);
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .form-box h3 {
+            text-align: center;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            text-align: left;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 95%;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid #145a89;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: #145a89;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            background-color: #0e4265;
+            color: white;
+        }
+        /* 🔹 Popup Modal Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+
+        .popup {
+            background: rgba(25, 104, 157, 0.2);
+            border: 2px solid rgba(25, 104, 157, 1);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            color: white;
+            width: 280px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .popup h3 {
+            margin: 0 0 10px;
+            color: white;
+        }
+
+        .popup p {
+            margin: 0 0 15px;
+            font-size: 14px;
+        }
+
+        .popup button {
+            background-color: #2674a8;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .popup button:hover {
+            background-color: #0e4265;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        footer {
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="back-icon" onclick="window.location.href='Home.html'">←</div>
+<div class="header">LINK PROFILE</div>
+
+    <div class="form-box">
+        <h3>Link Account To System</h3>
+        <form id="registrationForm">
+            <div class="form-group">
+                <label>Student Number</label>
+                <input type="text" id="student-id" placeholder="Student Number..." required />
+            </div>
+
+            <div class="form-group">
+                <label>First Name</label>
+                <input type="text" id="f-name" placeholder="First Names..." required />
+            </div>
+
+            <div class="form-group">
+                <label>Middle Name</label>
+                <input type="text" id="m-name" placeholder="Middle Names..." />
+            </div>
+
+            <div class="form-group">
+                <label>Surname</label>
+                <input type="text" id="surname" placeholder="Surname..." required />
+            </div>
+
+            <div class="form-group">
+                <label>Contact Number</label>
+                <input type="tel" id="phone-number" placeholder="Phone Number..." required />
+            </div>
+
+            <div class="form-group">
+                <label>Faculty</label>
+                <input type="text" id="faculty" placeholder="Your Faculty..." required />
+            </div>
+
+            <div class="form-group">
+                <label>Course</label>
+                <input type="text" id="course" placeholder="Your Course..." required />
+            </div>
+
+            <div class="form-group">
+                <label>Gender</label>
+                <select id="gender" required style="width: 100%; padding: 10px; background-color: #c4c4c4; border: none; border-radius: 8px; font-size: 14px;">
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="std-email" placeholder="Your Student Email..." required />
+            </div>
+
+            <div class="form-group">
+                <label>Create Password</label>
+                <input type="password" id="password" placeholder="Password..." required minlength="8" />
+            </div>
+
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" id="c-password" placeholder="Confirm Password..." required minlength="8" />
+            </div>
+
+            <button type="submit" class="btn-submit">LINK ACCOUNT</button>
+        </form>
+    </div>
+
+<!--  Popup Modal -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup" id="popupBox">
+        <h3 id="popupTitle">Message</h3>
+        <p id="popupMessage">This is a popup message.</p>
+        <button id="popupButton">OK</button>
+    </div>
+</div>
+<footer>
+    © 2025 UniDigital • Cape Peninsula University of Technology<br/>
+    Need Help? Contact unidigital.support@mycput.ac.za<br/>
+    (021) 324-56789
+</footer>
+<script>
+    // Show popup function
+    function showPopup(message, title = "Notification") {
+        const overlay = document.getElementById("popupOverlay");
+        const popupTitle = document.getElementById("popupTitle");
+        const popupMessage = document.getElementById("popupMessage");
+        const popupButton = document.getElementById("popupButton");
+
+        popupTitle.textContent = title;
+        popupMessage.textContent = message;
+
+        overlay.style.display = "flex"; // Show popup
+
+        popupButton.onclick = function() {
+            overlay.style.display = "none"; // Hide popup
+        };
+    }
+    // Function for linking the account
+    document.getElementById('registrationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Creating a variable fo active status
+        const status = "Active";
+
+        const formData = {
+            studentId: document.getElementById('student-id').value,
+            firstName: document.getElementById('f-name').value,
+            middleName: document.getElementById('m-name').value,
+            surname: document.getElementById('surname').value,
+            contactNumber: document.getElementById('phone-number').value,
+            faculty: document.getElementById('faculty').value,
+            course: document.getElementById('course').value,
+            gender: document.getElementById('gender').value,
+            email: document.getElementById('std-email').value,
+            password: document.getElementById('password').value,
+            status : status,
+
+        }
+        // Check if the correct cput email domain
+        if (!/^\d{9}@mycput\.ac\.za$/.test(formData.email)) {
+            showPopup('Please enter a valid CPUT email address');
+            return;
+        }
+        // Check if student number matches the email
+        if (formData.studentId !== formData.email.split('@')[0]) {
+            showPopup('Student number must match the first part of your CPUT email address');
+            return;
+        }
+        // Check if passwords match
+        if (formData.password !== document.getElementById('c-password').value) {
+            showPopup('Passwords do not match!');
+            return;
+        }
+
+        // Password strength validation
+        if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(formData.password)) {
+            showPopup('Password must contain at least 8 characters, including uppercase, lowercase, and numbers');
+            return;
+        }
+
+        // Fetch API to link the account and save student details to the server
+        fetch('http://localhost:8080/cputdigitalcard.com/api/cputdigitalcard.com/LinkAccount', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw err; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.studentId) {
+                    showPopup("Account linked successfully!");
+                    // Redirect to the LogIn page
+                     window.location.href = "LogIn.html";
+                } else {
+                    showPopup("Registration successful but unexpected response format");
+                }
+            })
+            .catch((error) => {
+                // Check if user already exist in server and other errors
+                showPopup("Error: " + (error.message || "Already registered user with this email or student number"));
+            });
+    });
+
+    // Back arrow functionality
+    document.querySelector('.back-arrow').addEventListener('click', function() {
+        window.location.href = "LogIn.html";
+    });
+</script>
+</body>
+</html>

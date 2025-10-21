@@ -68,6 +68,11 @@ public class StudentService implements IStudent {
         if (student == null || !student.getPassword().equals(password)) {
             throw new RuntimeException("Invalid email or password");
         }
+        // Check student status if is Active or Inactive
+        if (!"Active".equalsIgnoreCase(student.getStatus())) {
+            throw new RuntimeException("Your student account is Inactive, Please contact admin");
+        }
+
         return student;
     }
 
