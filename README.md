@@ -70,3 +70,12 @@ The group will use DDD For database backend using Java Spring Boot. Creating ent
 •	student_id is the primary foreign key in most relationships
 •	Spring Data JPA is used to interact with the database
 
+## How to run the project:
+Step 1: Start MySQL.
+Step 2: Clone the repository and open the project in your IDE (InteliJ most prefarable).
+Step 3: Let Maven download dependencies.
+Step 4: Check application.properties and rename the database name to match your in your MySQL Workbench.
+Step 5: Run the Spring Boot application located under ...
+Step 6: Wait until you see Started ....
+Step 7: Open the frontend (Can open any HTML application located under static folder)
+#NB: Be aware that when you are registering on the "link Page" you don't necesseary have to be a CPUT or used existing CPUT student number, for test purposes just create your own number must be 9 numbers only and add @mycput.ac.za i.e 123456789@mycput.ac.za
